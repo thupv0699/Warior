@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Sword
+  - EAttack
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Ground
   - BOD
   - Sword
-  - 
-  - 
+  - RangeAttack
+  - ESword
   - 
   - 
   - 

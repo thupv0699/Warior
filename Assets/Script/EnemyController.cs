@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
 
     private bool isFaceLeft = true;
 
+    HPScript hq;
     private enum State
     {
         idle,
@@ -19,14 +20,14 @@ public class EnemyController : MonoBehaviour
 
     private State state = State.idle;
 
-    Rigidbody2D rb2d;
 
     Animator anim;
+    BoxCollider2D b2d;
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        b2d = GetComponentInChildren<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -34,52 +35,47 @@ public class EnemyController : MonoBehaviour
     {
         if (isFaceLeft)
         {
+            //Nếu vị trí của Enemy < left max thì quay đầu enemy
             if (transform.position.x < leftMax)
             {
                 Flip();
-                moveSpeed *= -1;
-            }
-            else
-            {
-                isFaceLeft = false;
             }
         }
         else
         {
-            if(transform.position.x > rightMax)
+            if (transform.position.x > rightMax)
             {
                 Flip();
-                moveSpeed *= -1;
-            }
-            else
-            {
-                isFaceLeft = true;
             }
         }
 
-        rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
+        transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
 
         StateSwitch();
 
     }
     private void StateSwitch()
     {
-        if (Mathf.Abs(rb2d.velocity.x) > Mathf.Epsilon)
+        //nếu nhân nhật di chuyển thì chuyển sang state đi
+        if (transform.position.x != 0)
         {
             state = State.run;
         }
-
         anim.SetInteger("State", (int)state);
     }
     private void Flip()
     {
+        //thực hiện quay đầu
         isFaceLeft = !isFaceLeft;
         transform.Rotate(0f, 180, 0f);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag == "Sword"){
-            Debug.Log("get damage from sword");
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Sword")
+        {
+            //nếu chạm vào tag Sword thì destroy game object(death)
+            Destroy(gameObject);
         }
     }
 }

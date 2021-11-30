@@ -47,6 +47,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\GetTrigg.cs" />
      <Compile Include="Assets\AssetsDownloaded\Backgorund\Demo\MoveBackground.cs" />
      <Compile Include="Assets\Script\PlayerCombat.cs" />
      <Compile Include="Assets\Script\EnemyController.cs" />
